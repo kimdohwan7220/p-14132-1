@@ -6,11 +6,24 @@ import org.springframework.stereotype.Service
 class PostService(
     private val postRepository: PostRepository,
 ) {
-    fun findById(id: Int): Post? {
-        return postRepository.findById(id)
-            .also { print(it) }
-            .orElse(null)
+    fun count() = postRepository.count()
+
+    fun write(username: String): Post {
+        val post = Post(
+            0,
+            username,
+        )
+
+        return postRepository.save(post)
     }
 
+    fun findById(id: Int): Post? =
+        postRepository.findById(id)
+            .also { print(it) }
+            .orElse(null)
+
     fun findAll(): List<Post> = postRepository.findAll()
+
+    fun findByUsername(username: String): Post? =
+        postRepository.findByUsername(username)
 }
